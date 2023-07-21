@@ -3,15 +3,14 @@ const {Database} = require("../../db/index")
 let database = new Database()
 let collectionName = "users"
 const jwt = require('jsonwebtoken')
+
 class UserManager{
 
-    async createUsers(){
+    async createUsers(document){
         try {
             let data = await database.createDocument(collectionName,document)
-            database.close()
             return data
         } catch (error) {
-            database.close()
             throw error
         }
     }
@@ -20,10 +19,8 @@ class UserManager{
     async getAllUsers(){
         try {
             let data = await database.getAllDocuments(collectionName)
-            database.close()
             return data
         } catch (error) {
-            database.close()
             throw error
         }
     }
@@ -31,21 +28,17 @@ class UserManager{
     async totalUsers(){
         try {
             let data = await database.totalDocuments(collectionName)
-            database.close()
             return data
         } catch (error) {
-            database.close()
             throw error
         }
     }
 
-    async getUsersWithSkipAndLimitAndFields(){
+    async getUsersWithSkipAndLimitAndFields(skip,limit,field = {}){
         try {
-            let data = await database.getDocumentsWithSkipandLimitandFields(collectionName,skip,limit)
-            database.close()
+            let data = await database.getDocumentsWithSkipandLimitandFields(collectionName,skip,limit,field)
             return data
         } catch (error) {
-            database.close()
             throw error
         }
     }
@@ -59,10 +52,9 @@ class UserManager{
             let token = jwt.sign({_id:mongojs.ObjectId(data._id)},'token')
             data.token = token
 
-            database.close()
             return data
+
         } catch (error) {
-            database.close()
             throw error
         }
     }

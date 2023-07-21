@@ -15,10 +15,9 @@ class Admin{
 
         try {
             let data = await database.getOneDocument(collectionName,queryField)
-            database.close()
             return data
+            
         } catch (error) {
-            database.close()
             throw error
         }
     }
@@ -29,10 +28,8 @@ class Admin{
 
         try {
             let data = await database.updateDocument(collectionName,queryField,updateField)
-            database.close()
             return data
         } catch (error) {
-            database.close()
             throw error
         }
     }
@@ -42,10 +39,8 @@ class Admin{
         
         try {
             let data = await database.deleteDocument(collectionName,queryField)
-            database.close()
             return data
         } catch (error) {
-            database.close()
             throw error
         }
     }

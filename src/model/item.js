@@ -1,47 +1,50 @@
 const mongojs = require("mongojs")
 const {Database} = require("../../db/index")
 let database = new Database()
-let collectionName = "users"
+let collectionName = "items"
 
-class User{
+class Item{
 
-    userId
-    constructor(userId){
-        this.userId = userId
+    itemId
+    constructor(itemid){
+        this.itemId = itemId
     }
 
-    async getUserInfo(){
-        let queryField = {_id:mongojs.ObjectId(this.userId)}
+    async getOneItem(){
+        let queryField = {_id:mongojs.ObjectId(this.itemId)}
+
         try {
             let data = await database.getOneDocument(collectionName,queryField)
             return data
+
         } catch (error) {
             throw error
         }
     }
 
-    async updateUserInfo(document){
-        let queryField = {_id:mongojs.ObjectId(this.userId)}
+    async updateItem(document){
+        let queryField = {_id:mongojs.ObjectId(this.itemId)}
         let updateField = {$set: document}
 
         try {
             let data = await database.updateDocument(collectionName,queryField,updateField)
             return data
+
         } catch (error) {
             throw error
         }
     }
 
-    async deleteUser(){
-        let queryField = {_id:mongojs.ObjectId(this.userId)}
+    async deleteItem(){
+        let queryField = {_id:mongojs.ObjectId(this.itemId)}
+        
         try {
             let data = await database.deleteDocument(collectionName,queryField)
-            return data
+            return data 
+
         } catch (error) {
             throw error
         }
     }
-
 }
-
-module.exports = {User}
+module.exports = {Item}

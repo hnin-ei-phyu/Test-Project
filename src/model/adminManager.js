@@ -9,44 +9,37 @@ class AdminManager{
      async createAdmin(document){
         try {
             let data = await database.createDocument(collectionName,document)
-            database.close()
             return data
         } catch (error) {
-            database.close()
-            throw data
+            throw error
         }
      }
+   
 
      async getAllAdmins(){
         try {
             let data = await database.getAllDocuments(collectionName)
-            database.close()
             return data
         }catch(error){
-            database.close()
-            throw data
+            throw error
         }
     }
 
     async totalAdmins(){
         try {
             let data = await database.totalDocuments(collectionName)
-            database.close()
             return data
         } catch (error) {
-            database.close()
-            throw data
+            throw error
         }
     }
 
     async getAdminsWithSkipandLimitandField(skip,limit,field={}){
         try {
             let data = await database.getDocumentsWithSkipandLimitandFields(collectionName,skip,limit,field)
-            database.close()
             return data
         } catch (error) {
-            database.close()
-            throw data
+            throw error
         }
     }
 }

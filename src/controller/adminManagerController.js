@@ -13,13 +13,10 @@ class AdminManagerController{
             let adminManager = new AdminManager()
             let data = await adminManager.createAdmin(req.body)
 
-            if(!data){
-                res.status(404).josn({msg: "Admin not found !"})
-            }
-            res.status(200).json(data)
+            res.status(200).json({msg: "Created Successfully !"})
 
         } catch (error) {
-            res.status(500).json({msg: "Server Error !"})
+            res.status(500).json(data)
         }
     }
 
@@ -61,16 +58,21 @@ class AdminManagerController{
         let skip = parseInt(req.query.skip)
         let limit = parseInt(req.query.limit)
 
+        let validationErrors = req.validationErrors()
+        if(validationErrors) return res.status(400).json(validationErrors)
+
         try {
             let adminManager = new AdminManager()
             let data = await adminManager.getAdminsWithSkipandLimitandField(skip,limit)
             if(!data){
                 res.status(404).json({msg: "Admin not found"})
             }
-            res.status(200).json(adminManager)
+            res.status(200).json(data)
         } catch (error) {
             res.status(500).json({msg: "Server Error"})
         }
     }
 
 }
+
+module.exports = {AdminManagerController}

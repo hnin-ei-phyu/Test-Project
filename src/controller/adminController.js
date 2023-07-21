@@ -26,7 +26,7 @@ class AdminController{
 
         req.checkParams("id","id must be mongoId").isMongoId()
         req.checkBody("username","username should not be empty").notEmpty()
-        req.checkBody("password","passwrods should not be empty").notEmpty()
+        req.checkBody("password","password should not be empty").notEmpty()
 
         let validationErrors = req.validationErrors()
         if(validationErrors) return res.status(400).json(validationErrors)
@@ -34,9 +34,7 @@ class AdminController{
         try {
             let admin = new Admin(req.params.id)
             let data = await admin.updateAdminInfo(req.body)
-            if(!data){
-                res.status(404).json({msg: "Admin not found"})
-            }
+            
             res.status(200).json({msg: "Updated Successfully !"})
 
         } catch (error) {
@@ -64,3 +62,5 @@ class AdminController{
         }
     }
 }
+
+module.exports = {AdminController}
