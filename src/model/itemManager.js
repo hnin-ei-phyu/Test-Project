@@ -5,6 +5,15 @@ let collectionName = "items"
 
 class ItemManager{
 
+    async createItem(document){
+        try {
+            let data = await database.createDocument(collectionName,document)
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
+
     async getAllItems(){
         try {
             let data = await database.getAllDocuments(collectionName)

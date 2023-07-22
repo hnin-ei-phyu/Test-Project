@@ -6,7 +6,7 @@ let collectionName = "items"
 class Item{
 
     itemId
-    constructor(itemid){
+    constructor(itemId){
         this.itemId = itemId
     }
 

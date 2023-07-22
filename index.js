@@ -20,7 +20,8 @@ app.use("/api/admin",AdminRouter)
 app.use("/api/adminManager",AdminManagerRouter)
 app.use("/api/user",UserRouter)
 app.use("/api/userManager",UserManagerRouter)
-app.use("/api/item",)
+app.use("/api/item",ItemRouter)
+app.use("/api/itemManager",ItemManagerRouter)
 
 
 app.listen(3000,()=>{

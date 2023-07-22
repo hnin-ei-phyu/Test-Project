@@ -12,10 +12,11 @@ class ItemManagerController{
         
         let validationErrors = req.validationErrors()
         if(validationErrors) return res.status(400).json(validationErrors)
-
+     
         try {
             let itemManager = new ItemManager()
             let data = await itemManager.createItem(req.body)
+
             res.status(200).json(data)
             
         } catch (error) {
@@ -48,7 +49,7 @@ class ItemManagerController{
         
         try {
             let itemManager = new ItemManager()
-            let data = await itemManager.getItemsWithLimit()
+            let data = await itemManager.getItemsWithLimit(skip,limit)
             if(!data){
                 res.status(404).json({msg: "Items not found !"})
             }

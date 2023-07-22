@@ -9,7 +9,7 @@ class ItemController{
         if(validationErrors) return res.status(400).json(validationErrors)
 
         try {
-            let item = new Item()
+            let item = new Item(req.params.id)
             let data = await item.getOneItem()
             if(!data){
                 res.status(404).json({msg: "Items not found !"})
@@ -32,7 +32,7 @@ class ItemController{
         if(validationErrors) return res.status(400).json(validationErrors)
 
         try {
-            let item = new Item()
+            let item = new Item(req.params.id)
             let data = await item.updateItem(req.body)
             if(!data){
                 res.status(404).json({msg: "Item not found"})
@@ -51,7 +51,7 @@ class ItemController{
         if(validationErrors) return res.status(400).json(validationErrors)
 
         try {
-            let item = new Item()
+            let item = new Item(req.params.id)
             let data = await item.deleteItem()
             if(!data){
                 res.status(404).json({msg: "Item not found"})
