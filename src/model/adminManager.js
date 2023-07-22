@@ -2,6 +2,7 @@
 const {Database} = require("../../db/index")
 let database = new Database()
 let collectionName = "admins"
+const jwt = require("jsonwebtoken")
 
 
 class AdminManager{
@@ -38,6 +39,21 @@ class AdminManager{
         try {
             let data = await database.getDocumentsWithSkipandLimitandFields(collectionName,skip,limit,field)
             return data
+        } catch (error) {
+            throw error
+        }
+    }
+
+    async login(email,password){
+        try {
+            let data = await database.getOneDocument(collectionName,{email,password})
+            if(!data){
+                return 404
+            }
+            let token = jwt.sign({_id:mongoId.ObjectId(data._id)},"token")
+            data.token = token
+            return data
+
         } catch (error) {
             throw error
         }

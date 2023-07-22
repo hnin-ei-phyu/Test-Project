@@ -53,6 +53,7 @@ class UserManagerController{
 
     async createUser(req,res){
         req.checkBody("username", "username should not be empty").notEmpty()
+        req.checkBody("email", "email should not be empty").notEmpty()
         req.checkBody("password", "password should not be empty").notEmpty()
 
         let validationErrors = req.validationErrors()
@@ -70,5 +71,8 @@ class UserManagerController{
             res.status(500).json({msg: "Server Error !"})
         }
     }
+
+    //  write login controller
+    
 }
 module.exports = {UserManagerController}

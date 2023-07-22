@@ -43,9 +43,9 @@ class UserManager{
         }
     }
 
-    async login (username,password){
+    async login (email,password){
         try {
-            let data = await database.getOneDocument(collectionName,{username,password})
+            let data = await database.getOneDocument(collectionName,{email,password})
             if(!data) {
                 return 404
             }

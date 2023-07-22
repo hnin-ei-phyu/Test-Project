@@ -9,6 +9,7 @@ const UserRouter = require("./src/router/userRouter")
 const UserManagerRouter = require("./src/router/userManagerRouter")
 const ItemRouter = require("./src/router/itemRouter")
 const ItemManagerRouter = require("./src/router/itemManagerRouter")
+const AuthRouter = require("./src/router/authRouter")
 
 //middleware
 app.use(bodyParser.json())
@@ -22,6 +23,7 @@ app.use("/api/user",UserRouter)
 app.use("/api/userManager",UserManagerRouter)
 app.use("/api/item",ItemRouter)
 app.use("/api/itemManager",ItemManagerRouter)
+app.use("/api/auth",AuthRouter)
 
 
 app.listen(3000,()=>{
