@@ -43,22 +43,6 @@ class UserManager{
         }
     }
 
-    async login (email,password){
-        try {
-            let data = await database.getOneDocument(collectionName,{email,password})
-            if(!data) {
-                return 404
-            }
-            let token = jwt.sign({_id:mongojs.ObjectId(data._id)},'token')
-            data.token = token
-
-            return data
-
-        } catch (error) {
-            throw error
-        }
-    }
-
 }
 
 module.exports = {UserManager}

@@ -1,7 +1,6 @@
 {
   "name": "workspace",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -16,5 +15,15 @@
     "express-validator": "^5.3.1",
     "jsonwebtoken": "^9.0.1",
     "mongojs": "^3.1.0"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hnin-ei-phyu/Test-Project.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hnin-ei-phyu/Test-Project/issues"
+  },
+  "homepage": "https://github.com/hnin-ei-phyu/Test-Project#readme",
+  "description": ""
 }

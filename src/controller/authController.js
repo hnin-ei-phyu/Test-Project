@@ -1,3 +1,4 @@
+const { body } = require("express-validator/check")
 const {Auth} = require("../model/auth")
 
 class AuthController{
@@ -47,6 +48,62 @@ class AuthController{
             if(error==400) res.status(400).json({msg: "Invalid token"})
             else if(error==401) res.status(401).json({msg: "You are not Admin"})
             else res.status(500).json({msg: "Server Error"})
+        }
+    }
+
+    async registerAdmin(req,res,next){
+
+        req.checkBody("username","username should not be empty").notEmpty()
+        req.checkBody("email","email should not be empty").notEmpty()
+        req.checkBody("password","password should not be empty").notEmpty()
+
+        let validationErrors = req.validationErrors()
+        if(validationErrors) return res.status(400).json(validationErrors)
+
+        try {
+            let auth = new Auth()
+            let data = await auth.registerAdmin(req.body)
+
+            res.status(200).json(data)
+
+        } catch (error) {
+    
+            res.status(500).json({msg: "Server Error"})
+        }
+    }
+
+    async registerUser(req,res,next){
+
+        req.checkBody("username", "username should not be empty").notEmpty()
+        req.checkBody("email", "email should not be empyt").notEmpty()
+        req.checkBody("password", "password should not be empty").notEmpty()
+
+        let validationErrors = req.validationErrors()
+        if(validationErrors) return res.status(400).json(validationErrors)
+
+        try {
+            let auth = new Auth()
+            let data = await auth.registerUser(req.body)
+
+            res.status(200).json(data)
+
+        } catch (error) {
+    
+            res.status(500).json({msg: "Server Error"})
+        }
+    }
+
+    async loginAdmin(req,res,next){
+        req.checkParams("id","id must be mongoId").isMongoId()
+
+        let validationErrors = req.validationErrors()
+        if(validationErrors) return res.status(400).json(validationErrors)
+        
+        try {
+            let auth = new Auth()
+            let data = await auth.loginAdmin()
+        } catch (error) {
+            
         }
     }
 }

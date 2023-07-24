@@ -43,6 +43,16 @@ class ItemManager{
             throw error
         }
     }
+
+    async searchItem(searchText){
+        try {
+            let field = {$text:{$search:searchText}}
+            let data = await database.getAllDocuments(collectionName,field)
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
 }
 
 module.exports = {ItemManager}

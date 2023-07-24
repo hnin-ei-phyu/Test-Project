@@ -42,6 +42,24 @@ class User{
         }
     }
 
+    async login (email,password){
+        let requireField = {email,passwrod}
+        try {
+            let data = await database.getOneDocument(collectionName,requireField)
+            if(!data) {
+                return 404
+            }
+            let token = jwt.sign({_id:mongojs.ObjectId(data._id)},'token')
+            data.token = token
+
+            return data
+
+        } catch (error) {
+            throw error
+        }
+    }
+
+
 }
 
 module.exports = {User}

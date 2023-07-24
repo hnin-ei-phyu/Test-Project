@@ -7,9 +7,30 @@ const jwt = require("jsonwebtoken")
 
 class AdminManager{
     
+
+    async login(email,password){
+        let requireField = {email,password}
+        try {
+            let data = await database.getOneDocument(collectionName,requireField)
+            if(!data){
+                return 404
+            }
+            let token = jwt.sign({_id:mongoId.ObjectId(data._id)},"token")
+            data.token = token
+            return data
+
+        } catch (error) {
+            throw error
+        }
+    }
+
      async createAdmin(document){
         try {
             let data = await database.createDocument(collectionName,document)
+
+            
+            let token = jwt.sign({_id:mongoId.ObjectId(data._id)},"token")
+            data.token = token
             return data
         } catch (error) {
             throw error
@@ -44,20 +65,7 @@ class AdminManager{
         }
     }
 
-    async login(email,password){
-        try {
-            let data = await database.getOneDocument(collectionName,{email,password})
-            if(!data){
-                return 404
-            }
-            let token = jwt.sign({_id:mongoId.ObjectId(data._id)},"token")
-            data.token = token
-            return data
-
-        } catch (error) {
-            throw error
-        }
-    }
+    
 }
 
 module.exports = {AdminManager}

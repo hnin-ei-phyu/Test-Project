@@ -6,5 +6,6 @@ const adminController = new AdminController()
 router.get("/get-admin/:id",adminController.getOneAdmin)
 router.put("/update-admin/:id", adminController.updateAdmin)
 router.delete("/delete-admin/:id",adminController.deleteAdmin)
+router.post("/login-admin",adminController.login)
 
 module.exports = router

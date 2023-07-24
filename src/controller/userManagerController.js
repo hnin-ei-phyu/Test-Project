@@ -71,8 +71,7 @@ class UserManagerController{
             res.status(500).json({msg: "Server Error !"})
         }
     }
-
-    //  write login controller
+    
     
 }
 module.exports = {UserManagerController}

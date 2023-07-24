@@ -39,7 +39,7 @@ class UserController{
             if(!data){
                 res.status(404).json({msg: "User not found !"})
             }
-            res.status(200).json({msg: "Updated Successfully!"})
+            res.status(200).json(data)
             }catch (error){
                 res.status(500).json({msg: "Server Error !"})
         }
@@ -62,6 +62,25 @@ class UserController{
 
         } catch (error) {
             res.status(500).json({msg: "Server not found !"})
+        }
+    }
+
+    async login(req,res){
+
+        req.checkBody("email", "email should not be empty").notEmpty()
+        req.checkBody("password", "password should not be empty").notEmpty()
+
+        let validationErrors = req.validationErrors()
+        if(validationErrors) return res.status(400).json(validationErrors)
+
+        try {
+            let user = new User()
+            let data = await user.login()
+            res.status(404).json({msg: "User not found"})
+            res.status(200).json(data)
+
+        } catch (error) {
+            res.status(500).json({msg: "Server Error"})
         }
     }
 }

@@ -7,5 +7,6 @@ router.post("/create-item",itemManagerController.createItem)
 router.get("/all-items",itemManagerController.getAllItems)
 router.get("/total-items",itemManagerController.totalItems)
 router.get("/getItems-withLimit",itemManagerController.getItemsWithLimit)
+router.get("/search-item",itemManagerController.searchItem)
 
 module.exports = router

@@ -15,30 +15,26 @@ class Auth{
         try {
             decodedToken = jwt.verify(token,this.tokenKey)
         } catch (error) {
-            database.close()
             throw 400
         }
 
         try {
             let queryField = {_id:mongojs.ObjectId(decodedToken._id)}
             let admin = await database.getOneDocument(this.adminCollectionName,queryField)
-            database.close()
             if(admin) return admin
 
         } catch (error) {
-            database.close()
+
             throw 500
         }
 
         try {
             let queryField = {_id:mongojs.ObjectId(decodedToken._id)}
             let user = await database.getOneDocument(this.userCollectionName,queryField)
-            database.close()
             if(!user) throw 401
             return user
 
         } catch (error) {
-            database.close()
             throw error
         }
     }
@@ -49,7 +45,7 @@ class Auth{
         try {
             decodedToken = jwt.verify(token,this.tokenKey)
         } catch (error) {
-            database.close()
+
             throw 400
         }
 
@@ -61,7 +57,7 @@ class Auth{
             return admin
 
         } catch (error) {
-            database.close()
+
             throw error
         }
     }
@@ -79,12 +75,10 @@ class Auth{
         try {
             let queryField = {_id:mongojs.ObjectId(decodedToken._id)}
             let user = await database.getOneDocument(this.adminCollectionName,queryField)
-            database.close()
             if(!user) throw 401
             return user
 
         } catch (error) {
-            database.close()
             throw error
         }
     }
@@ -92,28 +86,51 @@ class Auth{
     async registerAdmin(document){
         try {
             let data = await database.createDocument(this.adminCollectionName,document)
-            database.close()
+
             data.token = jwt.sign({_id:data._id},this.tokenKey)
             return data
 
         } catch (error) {
-            database.close()
-            throw 500
+            throw error
+        }
+    }
+
+    async registerUser(document){
+        try {
+            let data = await database.createDocument(this.userCollectionName,document)
+
+            data.token = jwt.sign({_id:data._id},this.tokenKey)
+            return data
+
+        } catch (error) {
+            throw error
         }
     }
 
     async loginAdmin(email,password){
         let requiredField = {email,password}
         try {
-            let data = await database.getAllDocuments(this.adminCollectionName,requiredField)
-            database.close()
+            let data = await database.getOneDocument(this.adminCollectionName,requiredField)
             if(!data) throw 400
             else{
                 data.token = jwt.sign({_id:data._id},this.tokenKey)
                 return data
             }
         } catch (error) {
-            database.close()
+            throw error
+        }
+    }
+
+    async loginUser(email,password){
+        let requireField = {email,password}
+        try {
+            let data = await database.getOneDocument(this.userCollectionName,queryField)
+            if(!data) throw 400
+            else{
+                data.token = jwt.sign({_id:data._id},this.tokenKey)
+                return data
+            }
+        } catch (error) {
             throw error
         }
     }

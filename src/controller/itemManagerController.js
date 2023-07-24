@@ -71,6 +71,26 @@ class ItemManagerController{
             res.status(500).json({msg: "Server Error"})
         }
     }
+
+    async searchItem(req,res){
+        req.checkBody("searchItem","search should not be empty").notEmpty()
+
+        //validation
+        let validationErrors = req.validationErrors()
+        if(validationErrors) return res.status(400).json(validationErrors)
+
+        try {
+            let itemManager = new ItemManager()
+            let data = await itemManager.searchItem(req.body.searchItem)
+            if(!data){
+                res.status(404).json({msg: "Item not Found !"})
+            }
+            res.status(200).json(data)
+        } catch (error) {
+            res.status(500).json({msg: "Server Error"})
+        }
+    }
+
 }
 
 module.exports = {ItemManagerController}
