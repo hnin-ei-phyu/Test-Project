@@ -1,4 +1,3 @@
-const { body } = require("express-validator/check")
 const {Auth} = require("../model/auth")
 
 class AuthController{
@@ -11,6 +10,7 @@ class AuthController{
         try {
             let user = await auth.isAuthed(token)
             req.user = user
+
             next()
         } catch (error) {
             if(error==400)  res.status(400).json({msg: "Invalid token"})
@@ -94,16 +94,37 @@ class AuthController{
     }
 
     async loginAdmin(req,res,next){
-        req.checkParams("id","id must be mongoId").isMongoId()
+        req.checkBody("email", "email should not be empty").notEmpty()
+        req.checkBody("password", "password should not be empty").notEmpty()
 
         let validationErrors = req.validationErrors()
         if(validationErrors) return res.status(400).json(validationErrors)
         
         try {
             let auth = new Auth()
-            let data = await auth.loginAdmin()
+            let data = await auth.loginAdmin(email,passwrod)
+            res.status(200).json(data)
         } catch (error) {
+            res.status(500).json({msg: "Server Error"})
+        }
+    }
+
+    async loginUser(req,res,next){
+
+        req.checkBody("email", "email should not be empty").notEmpty()
+        req.checkBody("password", "password should not be empty").notEmpty()
+
+
+        let validationErrors = req.validationErrors()
+        if(validationErrors) return res.status(400).json(validationErrors)
+        
+        try {
+            let auth = new Auth()
+            let data = await auth.loginUser(email,password)
+            res.status(200).json(data)
             
+        } catch (error) {
+            res.status(500).json({msg: "Server Error"})
         }
     }
 }

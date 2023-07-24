@@ -28,10 +28,8 @@ class AdminManager{
         try {
             let data = await database.createDocument(collectionName,document)
 
-            
-            let token = jwt.sign({_id:mongoId.ObjectId(data._id)},"token")
-            data.token = token
             return data
+            
         } catch (error) {
             throw error
         }

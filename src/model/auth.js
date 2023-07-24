@@ -108,9 +108,9 @@ class Auth{
     }
 
     async loginAdmin(email,password){
-        let requiredField = {email,password}
+        let queryField = {email,password}
         try {
-            let data = await database.getOneDocument(this.adminCollectionName,requiredField)
+            let data = await database.getAllDocuments(this.adminCollectionName,queryField)
             if(!data) throw 400
             else{
                 data.token = jwt.sign({_id:data._id},this.tokenKey)
@@ -124,7 +124,7 @@ class Auth{
     async loginUser(email,password){
         let requireField = {email,password}
         try {
-            let data = await database.getOneDocument(this.userCollectionName,queryField)
+            let data = await database.getAllDocuments(this.userCollectionName,requireField)
             if(!data) throw 400
             else{
                 data.token = jwt.sign({_id:data._id},this.tokenKey)
